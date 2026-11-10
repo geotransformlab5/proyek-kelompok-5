@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ular Tangga Matematika</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="app-header">
+    <h1>
+      <!-- Ikon ular MERAH -->
+      <svg class="logo-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M5 21 C3 15 12 17 12 12 C12 7 20 9 18 5" fill="none" stroke="#7f1d1d" stroke-width="4.6" stroke-linecap="round"/>
+        <path d="M5 21 C3 15 12 17 12 12 C12 7 20 9 18 5" fill="none" stroke="#e11d1d" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="18" cy="4.6" r="2.8" fill="#e11d1d" stroke="#7f1d1d" stroke-width="1"/>
+        <circle cx="17.2" cy="3.9" r=".7" fill="#fff"/><circle cx="19" cy="3.9" r=".7" fill="#fff"/>
+        <path d="M20.5 6.2 L23 7.4 M20.5 6.2 L22.6 5.4" stroke="#7f1d1d" stroke-width=".7" stroke-linecap="round"/>
+      </svg>
+      Ular Tangga Matematika
+      <!-- Ikon tangga HIJAU -->
+      <svg class="logo-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <line x1="7" y1="2" x2="7" y2="22" stroke="#14532d" stroke-width="3.6" stroke-linecap="round"/>
+        <line x1="17" y1="2" x2="17" y2="22" stroke="#14532d" stroke-width="3.6" stroke-linecap="round"/>
+        <line x1="7" y1="2" x2="7" y2="22" stroke="#16a34a" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="17" y1="2" x2="17" y2="22" stroke="#16a34a" stroke-width="2.2" stroke-linecap="round"/>
+        <g stroke="#14532d" stroke-width="3" stroke-linecap="round">
+          <line x1="7" y1="6" x2="17" y2="6"/><line x1="7" y1="11" x2="17" y2="11"/>
+          <line x1="7" y1="16" x2="17" y2="16"/><line x1="7" y1="21" x2="17" y2="21"/>
+        </g>
+        <g stroke="#86efac" stroke-width="1.6" stroke-linecap="round">
+          <line x1="7" y1="6" x2="17" y2="6"/><line x1="7" y1="11" x2="17" y2="11"/>
+          <line x1="7" y1="16" x2="17" y2="16"/><line x1="7" y1="21" x2="17" y2="21"/>
+        </g>
+      </svg>
+    </h1>
+    <p class="subtitle">Proyek Kelompok 5 Kelas 3 C</p>
+    <button id="mute-btn" class="mute-btn" aria-label="Suara hidup/mati" title="Suara hidup/mati">🔊</button>
+  </header>
+
+  <main class="layout">
+    <section class="stage-wrap">
+      <div class="stage">
+        <div id="board" class="board" aria-label="Papan Ular Tangga"></div>
+        <svg id="overlay" class="overlay" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
+        <div id="pawn-layer" class="pawn-layer">
+          <div class="start-label" style="left:1%;top:104%">START ▶</div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="sidebar">
+      <div id="turn-card" class="turn-card" style="--pc:#1e66f5">
+        <div id="turn-avatar" class="turn-avatar">🐴</div>
+        <div class="turn-info">
+          <div class="turn-label">GILIRAN SAAT INI</div>
+          <div id="turn-name" class="turn-name">-</div>
+          <div id="turn-hint" class="turn-hint">-</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2 class="panel-title">👥 Posisi Pemain</h2>
+        <div id="status"></div>
+      </div>
+
+      <div class="panel dice-panel">
+        <h2 class="panel-title">🎲 Dadu</h2>
+        <div id="dice" class="dice" aria-label="Dadu">
+          <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+          <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+          <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+        </div>
+        <div id="dice-value" class="dice-value">Belum dilempar</div>
+        <button id="roll-btn" class="btn-roll">Lempar Dadu</button>
+      </div>
+
+      <div class="panel">
+        <h2 class="panel-title">🧭 Keterangan</h2>
+        <div class="legend-row"><span class="chip snake">🐍 Ular</span><span>Salah → turun ke ekor</span></div>
+        <div class="legend-row"><span class="chip ladder">🪜 Tangga</span><span>Benar → naik ke ujung</span></div>
+      </div>
+
+      <div class="panel">
+        <h2 class="panel-title">📜 Catatan Permainan</h2>
+        <ul id="log" class="log"></ul>
+      </div>
+
+      <button id="restart-btn" class="secondary">🔄 Permainan Baru</button>
+    </aside>
+  </main>
+
+  <div id="start-modal" class="modal-overlay">
+    <div class="modal">
+      <h2>Pilih Mode Permainan</h2>
+      <p>Mendarat di kepala ular atau dasar tangga akan memunculkan soal matematika!</p>
+      <div class="modal-actions">
+        <button class="primary" data-mode="bot">🐴 vs 🤖 Bot</button>
+        <button class="primary" data-mode="pvp">🐴 vs 🐰 2 Pemain</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="challenge-modal" class="modal-overlay hidden">
+    <div class="modal">
+      <div id="challenge-title" class="challenge-title"></div>
+      <div id="challenge-topic" class="challenge-topic"></div>
+      <div id="challenge-question" class="challenge-question"></div>
+      <div id="challenge-options" class="options"></div>
+      <div id="challenge-feedback" class="feedback"></div>
+      <button id="challenge-continue" class="primary hidden">Lanjut ▶</button>
+    </div>
+  </div>
+
+  <div id="win-modal" class="modal-overlay hidden">
+    <div class="modal">
+      <h2 id="win-text">🏆 Menang!</h2>
+      <button id="win-restart" class="primary">Main Lagi</button>
+    </div>
+  </div>
+
+  <script src="questions.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
